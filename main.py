@@ -1,5 +1,6 @@
 import base64
 import json
+import os
 import re
 import tempfile
 from io import BytesIO
@@ -136,6 +137,8 @@ class AigcDetectorPlugin(Star):
 
     @staticmethod
     async def _download_image(url: str) -> str:
+        if os.path.exists(url):
+            return url
         output = tempfile.NamedTemporaryFile(delete=False, suffix=".jpg")
         output_path = output.name
         output.close()
